@@ -6,8 +6,16 @@ export const App = defineComponent({
     return () => <>
       <header>
         <ul>
-          <li><RouterLink to='/'>Foo</RouterLink></li>
-          <li><RouterLink to='/bar'>Bar</RouterLink></li>
+          <li>
+            <RouterLink to='/'>
+              Foo
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink to='/bar'>
+              Bar
+            </RouterLink>
+          </li>
         </ul>
         <RouterView/>
       </header>
