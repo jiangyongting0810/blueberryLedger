@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue';
 import s from './First.module.scss'
 import intelliBooks from '../../assets/icons/intelliBooks.svg'
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
 export const First = defineComponent({
   setup: (props, context) => {
     return () => (
       <div class={s.wrapper}>
         <div class={s.card}>
-          <img class={s.intelliBooks} src={intelliBooks}/>
+          <img class={s.icon} src={intelliBooks}/>
           <h2>智能记账<br/>财务轻松掌握</h2>
         </div>
         <div class={s.actions}>
