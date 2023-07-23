@@ -1,7 +1,8 @@
 .wrapper{
   flex-grow: 1;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
+  padding-bottom: var(--welcome-nav-gap);
   > .card{
     flex-grow: 1;
     background: var(--welcome-card-bg);
@@ -15,13 +16,20 @@
     text-align: center;
   }
   > .actions{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: var(--z-index-bottom-nav);
+    background: var(--welecome-bg-end);
     display: flex;
     justify-content: space-between;
     align-items:center;
-    margin: 0 16px;
-    font-size: 24px;
+    font-size: 20px;
     color: var(--welcome-text);
-    padding: 24px 0;
+    height: var(--welcome-nav-height);
+    padding: 0 24px;
+    padding-bottom: var(--welcome-nav-gap);
     > .fake{
       visibility: hidden;
     }
