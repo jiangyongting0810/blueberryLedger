@@ -8,10 +8,10 @@ export const welcome = defineComponent({
     return () => 
     <div class={s.wrapper}>
       <header>
-        <img src={logo}/>
+        <img src={logo} class="s.logo"/>
         <h1>蓝莓账本</h1>
       </header>
-      <main>
+      <main class={s.main}>
         <RouterView/>
       </main>
     </div>
