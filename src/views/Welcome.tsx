@@ -1,14 +1,17 @@
 import { defineComponent, Transition, VNode } from 'vue';
 import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router';
 import s from './Welcome.module.scss'
-import logo from '../assets/icons/blueberries.svg'
+import blueberries from '../assets/icons/blueberries.svg'
 
 export const welcome = defineComponent({
   setup: (props, context) => {
     return () => 
     <div class={s.wrapper}>
       <header>
-        <img src={logo} class="s.logo"/>
+        <svg class={s.logo}>
+          <use xlinkHref='#blueberries'></use>
+        </svg>
+        {/* <img src={logo} class="s.logo"/> */}
         <h1>蓝莓账本</h1>
       </header>
       <main class={s.main}>
