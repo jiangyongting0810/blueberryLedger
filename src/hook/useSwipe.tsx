@@ -4,9 +4,18 @@ type point ={
   x:number,
   y:number
 }
-export const useSwipe = (element:Ref<HTMLElement | null>) => {
-  const start = ref<point | null >(null)
-  const end = ref<point | null >(null)
+interface Options {
+  beforeStart?:(e:TouchEvent) => void
+  afterStart?:(e:TouchEvent) => void
+  beforeMove?:(e:TouchEvent) => void
+  afterMove?:(e:TouchEvent) => void
+  beforeEnd?:(e:TouchEvent) => void
+  afterEnd?:(e:TouchEvent) => void
+}
+
+export const useSwipe = (element:Ref<HTMLElement | undefined>, Options?:Options) => {
+  const start = ref<point>()
+  const end = ref<point>()
   const swiping = ref(false)
   const distance = computed(()=>{
     if(!start.value || !end.value){
@@ -29,13 +38,16 @@ export const useSwipe = (element:Ref<HTMLElement | null>) => {
     }
   })
   const onStart = (e:TouchEvent) => {
+    Options?.beforeStart?.(e)
     swiping.value = true
     end.value = start.value = {
       x:e.touches[0].screenX,
       y:e.touches[0].screenY
     }
+    Options?.afterEnd?.(e)
   }
   const onMove = (e:TouchEvent) => {
+    Options?.beforeStart?.(e)
     if(!start.value){
       return
     }
@@ -43,9 +55,12 @@ export const useSwipe = (element:Ref<HTMLElement | null>) => {
       x:e.touches[0].screenX,
       y:e.touches[0].screenY
     }
+    Options?.afterEnd?.(e)
   }
   const onEnd = (e:TouchEvent) =>{
+    Options?.beforeStart?.(e)
     swiping.value = false
+    Options?.afterEnd?.(e)
   }
   onMounted(()=>{
     if(!element.value){
