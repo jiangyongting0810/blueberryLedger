@@ -1,10 +1,15 @@
-import { defineComponent, ref, Transition, VNode, watch, watchEffect } from 'vue';
-import { RouteLocationNormalizedLoaded, routerKey, RouterView, useRoute, useRouter } from 'vue-router';
+import { defineComponent, ref, Transition, VNode, watchEffect } from 'vue';
+import { RouteLocationNormalizedLoaded, RouterView, useRoute, useRouter } from 'vue-router';
 import s from './Welcome.module.scss'
-import blueberries from '../assets/icons/blueberries.svg'
 import { useSwipe } from '../hook/useSwipe';
 import { throttle } from '../hook/throttle';
 
+const pushMap:Record<string,string> = {
+  'Welcome1': '/welcome/2',
+  'Welcome2': '/welcome/3',
+  'Welcome3': '/welcome/4',
+  'Welcome4': '/start',
+}
 export const welcome = defineComponent({
   setup: (props, context) => {
     const main = ref<HTMLElement>()
@@ -13,17 +18,11 @@ export const welcome = defineComponent({
     })
     const router = useRouter()
     const route = useRoute()
-    // const 
+    
     const push = throttle(()=>{
-      if(route.name === 'Welcome1'){
-        router.push('/welcome/2')
-      }else if (route.name === 'Welcome2') {
-        router.push('/welcome/3')
-      }else if (route.name === 'Welcome3') {
-        router.push('/welcome/4')
-      }else if (route.name === 'Welcome4') {
-        router.push('/start')
-      }
+      //RouteRecordName有可能是string有可能是symbol
+      const name = (route.name || 'Welcome1').toString()
+      router.push(pushMap[name])
     },500)
     watchEffect(()=>{
       console.log(swiping.value,direction.value);
