@@ -1,15 +1,35 @@
 import { defineComponent, ref, Transition, VNode, watch, watchEffect } from 'vue';
-import { RouteLocationNormalizedLoaded, RouterView } from 'vue-router';
+import { RouteLocationNormalizedLoaded, routerKey, RouterView, useRoute, useRouter } from 'vue-router';
 import s from './Welcome.module.scss'
 import blueberries from '../assets/icons/blueberries.svg'
 import { useSwipe } from '../hook/useSwipe';
+import { throttle } from '../hook/throttle';
 
 export const welcome = defineComponent({
   setup: (props, context) => {
-    const main = ref<HTMLElement | null>(null)
-    const { direction,swiping } = useSwipe(main)
+    const main = ref<HTMLElement>()
+    const { direction,swiping } = useSwipe(main,{
+      beforeStart:e => e.preventDefault()
+    })
+    const router = useRouter()
+    const route = useRoute()
+    // const 
+    const push = throttle(()=>{
+      if(route.name === 'Welcome1'){
+        router.push('/welcome/2')
+      }else if (route.name === 'Welcome2') {
+        router.push('/welcome/3')
+      }else if (route.name === 'Welcome3') {
+        router.push('/welcome/4')
+      }else if (route.name === 'Welcome4') {
+        router.push('/start')
+      }
+    },500)
     watchEffect(()=>{
       console.log(swiping.value,direction.value);
+      if(direction.value === "left"){
+        push()
+      }
     })
     return () => 
     <div class={s.wrapper}>
