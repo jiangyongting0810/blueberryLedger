@@ -11,5 +11,7 @@
   --button-text:white;
   --button-font-size:18px;
   --button-radius:4px;
-  --button-height:48px
+  --button-height:48px;
+  --float-button-text:var(--button-text);
+  --float-button-bg:var(--button-bg)
 }
