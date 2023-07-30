@@ -1,7 +1,9 @@
+@use "sass:math";
 .floatButton{
   background: var(--float-button-bg);
   width: 56px;
   height: 56px;
+  border-radius: math.div(56px,2);
   border-radius: 28px;
   display: flex;
   justify-content: center;
