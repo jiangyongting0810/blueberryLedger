@@ -3,7 +3,7 @@
   --welcome-text:white;
   --z-index-bottom-nav:10;
   --welcome-bg-start:#1677ff;
-  --welecome-bg-end:#69b1ff;
+  --welcome-bg-end:#69b1ff;
   --welcome-nav-gap:8px;
   --welcome-nav-height:64px;
   --transition-duration: 0.5s;
@@ -13,5 +13,8 @@
   --button-radius:4px;
   --button-height:48px;
   --float-button-text:var(--button-text);
-  --float-button-bg:var(--button-bg)
+  --float-button-bg:var(--button-bg);
+  --navbar-bg-start: var(--welcome-bg-start);
+  --navbar-bg-end: var(--welcome-bg-end);
+  --navbar-text: white;
 }

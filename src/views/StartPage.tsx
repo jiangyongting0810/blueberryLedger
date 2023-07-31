@@ -3,6 +3,7 @@ import { Button } from '../shared/Button';
 import { Center } from '../shared/Center';
 import { FloatButton } from '../shared/FloatButton';
 import { Icon } from '../shared/Icon';
+import { Navbar } from '../shared/Navbar';
 import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   setup: (props, context) => {
@@ -11,13 +12,18 @@ export const StartPage = defineComponent({
     }
      return () => (
       <div>
-        <nav>menu</nav>
+        <Navbar>
+          {{
+            title:"蓝莓记账",
+            icon:<Icon name='menu' class={s.navIcon}/>
+          }}
+        </Navbar>
         <Center class={s.record_wrapper}>
           <Icon name='record' class={s.record}/>
         </Center>
         <div class={s.button_wrapper}>
           <Button class={s.button} onClick={onClick}>
-          测试
+          记一笔
           </Button>
           <FloatButton iconName='add'/>
         </div>
