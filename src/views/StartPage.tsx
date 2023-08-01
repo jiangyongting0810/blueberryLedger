@@ -14,8 +14,8 @@ export const StartPage = defineComponent({
       <div>
         <Navbar>
           {{
-            title:"蓝莓记账",
-            icon:<Icon name='menu' class={s.navIcon}/>
+            title:()=>"蓝莓记账",
+            icon:()=><Icon name='menu' class={s.navIcon}/>
           }}
         </Navbar>
         <Center class={s.record_wrapper}>
