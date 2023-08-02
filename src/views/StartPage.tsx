@@ -1,4 +1,5 @@
 import { defineComponent, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 import { Button } from '../shared/Button';
 import { Center } from '../shared/Center';
 import { FloatButton } from '../shared/FloatButton';
@@ -9,7 +10,7 @@ import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   setup: (props, context) => {
     const onClick = ()=>{
-      console.log("hi");
+      console.log("开始记账被点击");
     }
     const refOverlayVisible = ref(false)
     const onClickMenu =() =>{
@@ -28,10 +29,12 @@ export const StartPage = defineComponent({
           <Icon name='record' class={s.record}/>
         </Center>
         <div class={s.button_wrapper}>
-          <Button class={s.button} onClick={onClick}>
-            记一笔
-          </Button>
-          <FloatButton iconName='add'/>
+          <RouterLink to='/items/create'>
+            <Button class={s.button} onClick={onClick}>
+              开始记账
+            </Button>
+            <FloatButton iconName='add'/>
+          </RouterLink>
           {
             refOverlayVisible.value && 
             <Overlay onClose ={()=>refOverlayVisible.value = false}/>
