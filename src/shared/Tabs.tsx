@@ -14,25 +14,29 @@ export const Tabs = defineComponent({
   setup: (props, context) => {
     return ()=>{
         //如果是多个元素应该是个数组
-      const array = context.slots.default?.()
-      if(!array) return ()=> null
-      for(let i = 0;i<array.length;i++){
-        if(array[i].type !== Tab){
+      const tabs = context.slots.default?.()
+      console.log(tabs);
+      if(!tabs) return ()=> null
+      for(let i = 0;i<tabs.length;i++){
+        if(tabs[i].type !== Tab){
           throw new Error('<Tabs>仅接受<Tab>')
         }
       }
       return (
         <div class={s.Tabs}>
           <ol class={s.tabs_nav}>
-            {array.map(item=>
+            {tabs.map(item=>
               <li class={item.props?.name === props.selected ? s.selected : ''}
-                  // onClick={()=>props.onUpdateSelected?.(item.props?.name)}
-                  onClick={()=>context.emit('update:selected',item.props?.name)}
+                  onClick={()=>props.onUpdateSelected?.(item.props?.name)}
+                  // onClick={()=>context.emit('update:selected',item.props?.name)}
               >
                 {item.props?.name}
               </li>)
             }
           </ol>
+          <div>
+            {tabs.find(item => item.props?.name === props.selected)}
+          </div>
         </div>
       )
     }
