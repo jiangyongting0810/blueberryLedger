@@ -27,21 +27,21 @@ export const Inputpad = defineComponent({
       { text: '提交', onClick: () => { } },
     ]
     return () => (<>
-      <div class={s.wrapper}>
-        <span class={s.notes}>
-          <Icon name='date'/>
+      <div class={s.dateAndAmount}>
+        <span class={s.date}>
+          <Icon name='date' class={s.icon}/>
           <span>2022-01-01</span>
         </span>
         <span class={s.amount}>
-          数字
+          1992.12
         </span>
-        <div class={s.buttons}>
-          {buttons.map(button=>
-            <button onClick={button.onClick}>
-              {button.text}
-            </button>
-          )}
         </div>
+      <div class={s.buttons}>
+        {buttons.map(button=>
+          <button onClick={button.onClick}>
+            {button.text}
+          </button>
+        )}
       </div>
       </>
     )
