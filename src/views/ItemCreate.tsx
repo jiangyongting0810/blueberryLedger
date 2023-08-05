@@ -1,4 +1,5 @@
 import { defineComponent, PropType, ref } from 'vue';
+import { Inputpad } from '../components/item/InputPad';
 import { MainLayout } from '../layouts/MainLayout';
 import { Icon } from '../shared/Icon';
 import { Tab, Tabs } from '../shared/Tabs';
@@ -21,6 +22,9 @@ export const ItemCreate = defineComponent({
                 icon列表2
               </Tab>
             </Tabs>
+            <div class={s.InputPad_wrapper}>
+              <Inputpad/>
+            </div>
           </>
         }
       }
