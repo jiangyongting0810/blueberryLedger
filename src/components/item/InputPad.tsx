@@ -1,6 +1,8 @@
+import { DatetimePicker } from 'vant';
 import { defineComponent, PropType, ref } from 'vue';
 import { Icon } from '../../shared/Icon';
 import s from './Inputpad.module.scss';
+
 export const Inputpad = defineComponent({
   props: {
     name: {
@@ -33,14 +35,14 @@ export const Inputpad = defineComponent({
         <span class={s.date}>
           <Icon name='date' class={s.icon}/>
           <span>
-            
+            <DatetimePicker title="选择日期"/>
             2022-01-01
           </span>
         </span>
         <span class={s.amount}>
           1992.12
         </span>
-        </div>
+      </div>
       <div class={s.buttons}>
         {buttons.map(button=>
           <button onClick={button.onClick}>
