@@ -13,7 +13,39 @@ export const InputPad = defineComponent({
   setup: (props, context) => {
     const now = new Date()
     const refDate = ref<Date>(now)
-    const appendText = (n:string | number) => refAmount.value += n.toString()
+    const appendText = (n:string | number) => {
+      const nString = n.toString()
+      const dotIndex = refAmount.value.indexOf('.')
+      if(refAmount.value.length>=13){
+        return
+      }
+      //如果有小数点，且小数点后长度大于2
+      if(dotIndex >= 0 && refAmount.value.length - dotIndex>2){
+        return
+      }
+      //如果输入的为. 
+      if(nString === '.'){
+        //如果输入的为. 且小数点位置
+        if(dotIndex >= 0){
+          return
+        }
+      //如果输入为0
+      }else if(nString === "0"){
+        //且小数点不存在
+        if(dotIndex === -1){
+          //输入0则return
+          if(refAmount.value === '0'){
+            return
+          }
+        }
+      }else{
+        //如果最后为0，则为空
+        if(refAmount.value === '0'){
+          refAmount.value = ''
+        }
+      }
+      refAmount.value += nString
+    }
     const buttons = [
       {text: '1', onClick: () => { appendText(1) }},
       { text: '2', onClick: () => { appendText(2) } },
@@ -26,7 +58,7 @@ export const InputPad = defineComponent({
       { text: '9', onClick: () => { appendText(9) } },
       { text: '.', onClick: () => { appendText('.') } },
       { text: '0', onClick: () => { appendText(0) } },
-      { text: '清空', onClick: () => { } },
+      { text: '清空', onClick: () => { refAmount.value='0' } },
       { text: '提交', onClick: () => { } },
     ]
     const refShowPop = ref(false)
@@ -34,7 +66,7 @@ export const InputPad = defineComponent({
     const showDatePicker = () =>refShowPop.value = true
     const hideDatePicker = () =>refShowPop.value = false
     const setDate = (date:Date)=>{refDate.value = date;hideDatePicker()}
-    const refAmount = ref('')
+    const refAmount = ref('0')
     return () => (<>
       <div class={s.dateAndAmount}>
         <span class={s.date}>
