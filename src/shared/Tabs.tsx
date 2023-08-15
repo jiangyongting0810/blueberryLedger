@@ -2,6 +2,9 @@ import { defineComponent, PropType } from 'vue';
 import s from './Tabs.module.scss';
 export const Tabs = defineComponent({
   props: {
+    classPrefix:{
+      type:String
+    },
     selected: {
       type: String as PropType<string>,
       required:false
@@ -12,6 +15,7 @@ export const Tabs = defineComponent({
     }
   },
   setup: (props, context) => {
+    
     return ()=>{
         //如果是多个元素应该是个数组
       const tabs = context.slots.default?.()
@@ -22,11 +26,15 @@ export const Tabs = defineComponent({
           throw new Error('<Tabs>仅接受<Tab>')
         }
       }
+      const cp = props.classPrefix
       return (
-        <div class={s.Tabs}>
-          <ol class={s.tabs_nav}>
+        <div class={[s.Tabs,cp+'_tabs']}>
+          <ol class={[s.tabs_nav, cp + '_tabs_nav']}>
             {tabs.map(item=>
-              <li class={item.props?.name === props.selected ? s.selected : ''}
+              <li class={[
+                item.props?.name === props.selected ? [s.selected,cp+'_selected'] : '',
+                cp + '_tabs_nav_item'
+              ]}
                   onClick={()=>props.onUpdateSelected?.(item.props?.name)}
                   // onClick={()=>context.emit('update:selected',item.props?.name)}
               >
