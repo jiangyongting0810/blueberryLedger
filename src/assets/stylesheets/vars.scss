@@ -39,4 +39,12 @@
   --main: #1677ff;
   --tag-bg: #EFEFEF;
   --button-bg-danger:#69b1ff;
+
+  --list-tag-text: #333;
+  --list-amount-text: var(--amount-text);
+  --list-time-text: var(--date-text);
+  --total-bg: #252A43;
+  --total-text: white;
+  --total-income: #FE7275;
+  --total-expenses: #53A867;
 }
