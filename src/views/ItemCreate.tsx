@@ -56,7 +56,12 @@ export const ItemCreate = defineComponent({
           icon:()=><Icon name='left' class={s.navIcon}/>,
           default: () => <>
           <div class={s.wrapper}>
-            <Tabs selected={refKind.value} onUpdateSelected={(name)=>refKind.value=name} class={s.tabs}>
+            <Tabs 
+              //直接传值是双向绑定的
+              // v-model:selected={refKind.value} 
+              selected={refKind.value}
+              onUpdate:selected={(name)=>{ refKind.value = name; console.log('事件传递到外部')}}
+              class={s.tabs}>
               <Tab name="支出" class={s.tags_wrapper}>
                 <div class={s.tag}>
                   <div class={s.sign}>
