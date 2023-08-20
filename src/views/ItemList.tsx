@@ -35,12 +35,6 @@ export const ItemList = defineComponent({
         end:time.lastDayOfYear()
       }
     ]
-    watchEffect(()=>{
-      if(refSelected.value === '自定义时间'){
-        refOverlayVisible.value = true
-        console.log('选中了自定义时间')
-      }
-    })
     const refOverlayVisible = ref(false)
     const onsubmitCustomTime = (e:Event)=>{
       e.preventDefault()
@@ -49,13 +43,28 @@ export const ItemList = defineComponent({
     const onclose = ()=>{
       refOverlayVisible.value = false
     }
+    const onSelect = (value:string) => {
+      if(value === '自定义时间'){
+        refSelected.value=value
+        refOverlayVisible.value = true 
+      }
+      else{
+        refSelected.value=value
+        console.log(1+refSelected.value);
+      }
+    }
     return () => (
       <MainLayout>
         {{
           title:()=>"记账列表",
           icon:()=><Icon name='menu'/>,
           default:()=><>
-            <Tabs classPrefix={'customTabs'} selected={refSelected.value} onUpdateSelected={(name)=>refSelected.value=name}>
+            <Tabs 
+              classPrefix={'customTabs'} 
+              // v-model:selected={refSelected.value}
+              selected={refSelected.value} 
+              onUpdate:selected={onSelect}
+              >
               <Tab name="本月">
                 <ItemSummary startDate={timeList[0].start.format()} endDate={timeList[0].end.format()}/>
               </Tab>
