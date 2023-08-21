@@ -8,6 +8,7 @@ import { Tab, Tabs } from '../shared/Tabs';
 import { Time } from '../shared/time';
 import s from './ItemList.module.scss';
 import { ItemSummary } from './ItemSummary';
+import { OverlayIcon } from './Overlay';
 export const ItemList = defineComponent({
   props: {
     name: {
@@ -57,7 +58,7 @@ export const ItemList = defineComponent({
       <MainLayout>
         {{
           title:()=>"记账列表",
-          icon:()=><Icon name='menu'/>,
+          icon:()=><OverlayIcon/>,
           default:()=><>
             <Tabs 
               classPrefix={'customTabs'} 
