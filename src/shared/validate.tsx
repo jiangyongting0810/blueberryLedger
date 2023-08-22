@@ -25,7 +25,7 @@ export const validate =<T extends FData>(formData:T,rules:Rules<T>)=>{
         if(isEmpty(value)){
           errors[key] = errors[key] ?? []
           errors[key]?.push(message)
-          errors[key]?.push("1111")
+          // errors[key]?.push("1111")
         }
         break;
       case 'pattern':
