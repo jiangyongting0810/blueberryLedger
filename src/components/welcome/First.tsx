@@ -7,7 +7,7 @@ export const First:FunctionalComponent=()=>{
     <svg>
       <use xlinkHref='#intelliBooks'></use>
     </svg>
-    <h2>智能记账<br/>财务轻松掌握</h2>,
+    <h2>智能记账<br/>财务轻松掌握</h2>
   </div>
 }
 First.displayName = 'First'
