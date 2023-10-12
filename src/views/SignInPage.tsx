@@ -22,21 +22,20 @@ export const SignInPage = defineComponent({
       code:[]
     })
     const onSubmit = (e:Event)=>{
+      console.log('submit');
       e.preventDefault()
       Object.assign(errors, {
         email: [], code: []
       })
-      console.log(errors)
       Object.assign(errors,validate(formData,[
         {key:'email',type:"required",message:'必填'},
         {key:'email',type:"pattern",regex:/.+@.+/,message:'必须是邮箱地址'},
         {key:'code',type:"required",message:'必填'},
       ]))
-      // console.log(errors)
     }
     const onClickSendValidationCode =async()=>{
       const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
-      console.log('点击验证码按钮' + response)
+      console.log(response);
     }
     return () => (
       <MainLayout>
@@ -56,12 +55,12 @@ export const SignInPage = defineComponent({
                 <FormItem 
                   error={errors.code?.[0]} 
                   v-model={formData.code} 
-                  label='验证码' 
+                  label='验证码'  
                   type='validationCode' 
                   onClick={onClickSendValidationCode}
                   placeholder='请输入验证码'/>
                 <FormItem>
-                  <Button>
+                  <Button type='submit' class={s.submitButton}>
                     登录
                   </Button>
                 </FormItem>
