@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineComponent, PropType, reactive } from 'vue';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
@@ -33,8 +34,9 @@ export const SignInPage = defineComponent({
       ]))
       // console.log(errors)
     }
-    const onClickSendValidationCode =()=>{
-      console.log('点击了验证码按钮');
+    const onClickSendValidationCode =async()=>{
+      const response = await axios.post('/api/v1/validation_codes',{email:formData.email})
+      console.log('点击验证码按钮' + response)
     }
     return () => (
       <MainLayout>
