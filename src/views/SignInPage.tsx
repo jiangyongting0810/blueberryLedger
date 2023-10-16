@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { defineComponent, PropType, reactive, ref } from 'vue';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
+import { http } from '../shared/Http';
 import { Icon } from '../shared/Icon';
 import { validate } from '../shared/validate';
 import s from './SignInPage.module.scss';
@@ -34,11 +34,15 @@ export const SignInPage = defineComponent({
         {key:'code',type:"required",message:'必填'},
       ]))
     }
+    const onError = (error:any)=>{
+      if(error.response.status === 422){                
+        Object.assign(errors,error.response.data.errors)
+      }
+      throw error
+    }
     const onClickSendValidationCode =async()=>{
-      const response = await axios.post('/api/v1/validation_codes', { email: formData.email })
-      .catch(()=>{
-        //失败
-      })
+      const response = await http.post('/validation_codes', { email: formData.email })
+      .catch(onError)
     // 成功
     refValidationCode.value.startCount()
     }
@@ -53,17 +57,21 @@ export const SignInPage = defineComponent({
                 <Icon name='blueberries' />
                 <h1 class={s.appName}>蓝莓记账</h1>
                 |{formData.email} |
-                |{formData.code} |
               </div>
               <Form onSubmit={onSubmit}>
-                <FormItem error={errors.email?.[0]} v-model={formData.email} label='邮箱地址' type='text' placeholder='请输入邮箱'/>
+                <FormItem 
+                  error={errors.email?.[0]} 
+                  v-model={formData.email} 
+                  label='邮箱地址' 
+                  type='text' 
+                  placeholder='请输入邮箱'/>
                 <FormItem 
                   ref={refValidationCode}
                   error={errors.code?.[0]} 
                   v-model={formData.code} 
                   label='验证码'  
                   type='validationCode' 
-                  countFrom={3}
+                  countFrom={1}
                   onClick={onClickSendValidationCode}
                   placeholder='请输入验证码'/>
                 <FormItem>
