@@ -1,4 +1,5 @@
 import { defineComponent, PropType, reactive, ref } from 'vue';
+import { useBool } from '../hook/useBool';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
@@ -13,6 +14,7 @@ export const SignInPage = defineComponent({
     }
   },
   setup: (props, context) => {
+    const { ref:refDisabled,toggle,on:disabled,off:enable } = useBool(false)
     const formData = reactive({
       email:'792304256@qq.com',
       code:''
@@ -41,8 +43,10 @@ export const SignInPage = defineComponent({
       throw error
     }
     const onClickSendValidationCode =async()=>{
+      disabled()
       const response = await http.post('/validation_codes', { email: formData.email })
       .catch(onError)
+      .finally(enable)
     // 成功
     refValidationCode.value.startCount()
     }
@@ -71,9 +75,9 @@ export const SignInPage = defineComponent({
                   v-model={formData.code} 
                   label='验证码'  
                   type='validationCode' 
-                  countFrom={1}
+                  countFrom={3}
                   onClick={onClickSendValidationCode}
-                  placeholder='请输入验证码'/>
+                  placeholder='请输入六位数字'/>
                 <FormItem>
                   <Button type='submit' class={s.submitButton}>
                     登录
