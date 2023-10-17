@@ -1,11 +1,13 @@
 import { defineComponent, PropType, reactive, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { routes } from '../config/routes';
 import { useBool } from '../hook/useBool';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
 import { http } from '../shared/Http';
 import { Icon } from '../shared/Icon';
-import { validate } from '../shared/validate';
+import { hasError, validate } from '../shared/validate';
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
   props: {
@@ -23,8 +25,9 @@ export const SignInPage = defineComponent({
       email:[],
       code:[]
     })
+    const router = useRouter()
     const refValidationCode = ref<any>()
-    const onSubmit = (e:Event)=>{
+    const onSubmit = async (e:Event)=>{
       console.log('submit');
       e.preventDefault()
       Object.assign(errors, {
@@ -35,6 +38,12 @@ export const SignInPage = defineComponent({
         {key:'email',type:"pattern",regex:/.+@.+/,message:'必须是邮箱地址'},
         {key:'code',type:"required",message:'必填'},
       ]))
+      if(!hasError(errors)){
+        const response = await http.post<{jwt:string}>('/session',formData)
+        console.log(response);
+        localStorage.setItem('jwt',response.data.jwt)       
+        router.push("/")
+      }
     }
     const onError = (error:any)=>{
       if(error.response.status === 422){                
@@ -61,6 +70,7 @@ export const SignInPage = defineComponent({
                 <Icon name='blueberries' />
                 <h1 class={s.appName}>蓝莓记账</h1>
                 |{formData.email} |
+                |{formData.code}|
               </div>
               <Form onSubmit={onSubmit}>
                 <FormItem 
