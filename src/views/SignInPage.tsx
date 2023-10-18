@@ -7,6 +7,7 @@ import { Button } from '../shared/Button';
 import { Form, FormItem } from '../shared/Form';
 import { http } from '../shared/Http';
 import { Icon } from '../shared/Icon';
+import { refreshMe } from '../shared/mePromise';
 import { hasError, validate } from '../shared/validate';
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
@@ -46,6 +47,7 @@ export const SignInPage = defineComponent({
         // router.push("/")
         const returnTo = route.query.return_to?.toString()
         console.log(route.query.return_to);
+        refreshMe()
         router.push(returnTo || '/')
       }
     }
