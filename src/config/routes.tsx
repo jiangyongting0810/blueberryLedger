@@ -9,6 +9,7 @@ import { Second } from "../components/welcome/Second";
 import { SecondActions } from "../components/welcome/SecondActions";
 import { Third } from "../components/welcome/Third";
 import { ThirdActions } from "../components/welcome/ThirdActions";
+import { http } from "../shared/Http";
 import { ItemCreate } from "../views/ItemCreate";
 import { ItemList } from "../views/ItemList";
 import { ItemPage } from "../views/ItemPage";
@@ -37,6 +38,12 @@ export const routes:RouteRecordRaw[] = [
   { path: '/start', component: StartPage },
   {
     path: '/items', component: ItemPage,
+    beforeEnter: async (to, from, next) => {
+      await http.get('/me').catch(() => {
+        next('/sign_in?return_to=' + to.path)
+      })
+      next()
+    },
     children: [
       { path: '', component: ItemList },
       { path: 'create', component: ItemCreate },
