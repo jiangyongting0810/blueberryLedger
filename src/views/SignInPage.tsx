@@ -26,6 +26,7 @@ export const SignInPage = defineComponent({
       code:[]
     })
     const router = useRouter()
+    const route = useRoute()
     const refValidationCode = ref<any>()
     const onSubmit = async (e:Event)=>{
       console.log('submit');
@@ -42,11 +43,14 @@ export const SignInPage = defineComponent({
         const response = await http.post<{jwt:string}>('/session',formData)
         console.log(response);
         localStorage.setItem('jwt',response.data.jwt)       
-        router.push("/")
+        // router.push("/")
+        const returnTo = route.query.return_to?.toString()
+        console.log(route.query.return_to);
+        router.push(returnTo || '/')
       }
     }
     const onError = (error:any)=>{
-      if(error.response.status === 422){                
+      if(error.response.status === 422){
         Object.assign(errors,error.response.data.errors)
       }
       throw error
