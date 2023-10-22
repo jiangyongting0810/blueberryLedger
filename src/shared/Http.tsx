@@ -13,7 +13,7 @@ export class Http{
       baseURL
     })
   }
-  get<R = unknown>(url:string,query?:Record<string,string>,config?:GetConfig){
+  get<R = unknown>(url:string,query?:Record<string,JSONValue>,config?:GetConfig){
     return this.instance.request<R>({...config,url,params:query,method:'get'})
   }
   post<R = unknown>(url: string, data?: Record<string, JSONValue>, config?: PostConfig){
