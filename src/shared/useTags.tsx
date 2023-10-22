@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { ref, onMounted } from "vue"
 
-type Fetcher = (page:number) => Promise<AxiosResponse<Resources<Tag>>>
+type Fetcher = (page: number) => Promise<AxiosResponse<Resources<Tag>>>
 export const useTags = (fetcher:Fetcher) =>{
   const page = ref(0)
   const hasMore = ref(false)

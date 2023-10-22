@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from 'vue';
 import s from './Tabs.module.scss';
-export const Tabs = defineComponent({
+export const  Tabs = defineComponent({
   props: {
     classPrefix:{
       type:String
@@ -43,7 +43,7 @@ export const Tabs = defineComponent({
             }
           </ol>
           <div>
-            {tabs.find(item => item.props?.name === props.selected)}
+            {tabs.map(item => <div v-show={item.props?.name === props.selected}>{item}</div>)}
           </div>
         </div>
       )
