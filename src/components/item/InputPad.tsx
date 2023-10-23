@@ -8,7 +8,9 @@ export const InputPad = defineComponent({
   props: {
     name: {
       type: String as PropType<string>
-    }
+    },
+    happenAt: String,
+    amount:Number
   },
   setup: (props, context) => {
     const now = new Date()
@@ -59,22 +61,32 @@ export const InputPad = defineComponent({
       { text: '.', onClick: () => { appendText('.') } },
       { text: '0', onClick: () => { appendText(0) } },
       { text: '清空', onClick: () => { refAmount.value='0' } },
-      { text: '提交', onClick: () => { } },
+      { text: '提交',
+        onClick: () => {
+          context.emit('update:amount',parseFloat(refAmount.value)*100)
+        }
+      },
     ]
     const refShowPop = ref(false)
-    console.log(new Time(refDate.value).format())
+    // console.log(new Time(refDate.value).format())
     const showDatePicker = () =>refShowPop.value = true
     const hideDatePicker = () =>refShowPop.value = false
-    const setDate = (date:Date)=>{refDate.value = date;hideDatePicker()}
-    const refAmount = ref('0')
+    const setDate = (date:Date)=>{
+      context.emit('update:happenAt',date.toISOString())
+      // refDate.value = date;
+      hideDatePicker()
+    }
+    const refAmount = ref(props.amount ? (props.amount/100).toString() : '0')
     return () => (<>
       <div class={s.dateAndAmount}>
         <span class={s.date}>
           <Icon name='date' class={s.icon}/>
           <span>
-            <span onClick={showDatePicker}>{new Time(refDate.value).format()}</span>
+            <span onClick={showDatePicker}>
+              {new Time(props.happenAt).format()}
+            </span>
             <Popup position='bottom' v-model:show={refShowPop.value}>
-                <DatetimePicker value={refDate.value} type='date' title="选择年月日"
+                <DatetimePicker value={props.happenAt} type='date' title="选择年月日"
                   onConfirm={setDate} onCancel={hideDatePicker}/>
             </Popup>
           </span>
