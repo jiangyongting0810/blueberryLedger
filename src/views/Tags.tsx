@@ -15,6 +15,8 @@ export const Tags = defineComponent({
   emits:['update:selected'],
   setup: (props, context) => {
     const onSelect = (tag:Tag) => {
+      console.log(props.selected);
+      console.log(tag.id);
       context.emit("update:selected",tag.id)
     }
     const {tags , page ,hasMore ,fetchTags} = useTags((page)=>{
@@ -36,7 +38,7 @@ export const Tags = defineComponent({
             </div>
           </div>
           {tags.value.map(tag =>
-            <div class={[s.tag, props.selected === tag.id ? s.selectd : '']} onClick={()=> onSelect(tag)}>
+            <div class={[s.tag, props.selected === tag.id ? s.selected : '']} onClick={()=> onSelect(tag)}>
               <div class={s.sign}>
                 {tag.sign}
               </div>
