@@ -1,8 +1,8 @@
 import { defineComponent, PropType } from 'vue';
-import { Button } from '../shared/Button';
-import { http } from '../shared/Http';
-import { Icon } from '../shared/Icon';
-import { useTags } from '../shared/useTags';
+import { Button } from '../../shared/Button';
+import { http } from '../../shared/Http';
+import { Icon } from '../../shared/Icon';
+import { useTags } from '../../shared/useTags';
 import s from './Tags.module.scss';
 export const Tags = defineComponent({
   props: {

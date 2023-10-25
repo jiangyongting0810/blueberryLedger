@@ -1,5 +1,5 @@
 import { defineComponent, PropType } from 'vue';
-import { TimeTabsLayout } from '../layouts/TimeTabsLayout';
+import { TimeTabsLayout } from '../../layouts/TimeTabsLayout';
 import { ItemSummary } from './ItemSummary';
 export const ItemList = defineComponent({
   props: {

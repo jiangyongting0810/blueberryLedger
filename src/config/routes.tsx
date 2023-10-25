@@ -1,4 +1,7 @@
 import { RouteRecordRaw } from "vue-router";
+import { ItemCreate } from "../components/item/ItemCreate";
+import { ItemList } from "../components/item/ItemList";
+import { ItemPage } from "../components/item/ItemPage";
 import { TagCreate } from "../components/tag/TagCreate";
 import { TagEdit } from "../components/tag/TagEdit";
 import { First } from "../components/welcome/First";
@@ -9,10 +12,6 @@ import { Second } from "../components/welcome/Second";
 import { SecondActions } from "../components/welcome/SecondActions";
 import { Third } from "../components/welcome/Third";
 import { ThirdActions } from "../components/welcome/ThirdActions";
-import { http } from "../shared/Http";
-import { ItemCreate } from "../views/ItemCreate";
-import { ItemList } from "../views/ItemList";
-import { ItemPage } from "../views/ItemPage";
 import { SignInPage } from "../views/SignInPage";
 import { StartPage } from "../views/StartPage";
 import { StatisticsPage } from "../views/StatisticsPage";

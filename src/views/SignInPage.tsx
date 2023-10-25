@@ -1,6 +1,5 @@
 import { defineComponent, PropType, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { routes } from '../config/routes';
 import { useBool } from '../hook/useBool';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';

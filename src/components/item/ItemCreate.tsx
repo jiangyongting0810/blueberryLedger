@@ -1,14 +1,14 @@
 import { AxiosError } from 'axios';
-import { Dialog } from 'vant';
+import { Dialog} from 'vant';
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { InputPad } from '../components/item/InputPad';
-import { MainLayout } from '../layouts/MainLayout';
-import { http } from '../shared/Http';
-import { Icon } from '../shared/Icon';
-import { Tab, Tabs } from '../shared/Tabs';
-import s from './ItemCreate.module.scss';
+import { MainLayout } from '../../layouts/MainLayout';
+import { http } from '../../shared/Http';
+import { Icon } from '../../shared/Icon';
+import { Tab, Tabs } from '../../shared/Tabs';
 import { Tags } from './Tags';
+import { InputPad } from './InputPad';
+import s from './ItemCreate.module.scss';
 export const ItemCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
