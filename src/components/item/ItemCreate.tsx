@@ -9,6 +9,7 @@ import { Tab, Tabs } from '../../shared/Tabs';
 import { Tags } from './Tags';
 import { InputPad } from './InputPad';
 import s from './ItemCreate.module.scss';
+import { BackIcon } from '../../shared/BackIcon';
 export const ItemCreate = defineComponent({
   setup: (props, context) => {
     const formData = reactive({
@@ -19,32 +20,24 @@ export const ItemCreate = defineComponent({
     })
     const router = useRouter()
     const onError = (error:AxiosError<ResourceError>) => {
-      // window.alert(error)
-      console.log("ssss");
-      
       if(error.response?.status){
         Dialog.alert({
           title:'出错',
           message:Object.values(error.response.data.errors).join('\n')
         })
       }
-      console.log(error);
       throw error
     }
     const onSubmit = async () => {
-      console.log(2);
       await http.post<Resource<Item>>('/items', formData,
         { params: { _mock: 'itemCreate' } }
       ).catch(onError)
-      console.log(11111);
-      
       router.push("/items")
-      console.log(2222);
     }
     return () => (
       <MainLayout class={s.layout}>{{
         title: () => '记一笔',
-        icon: () => <Icon name="left" class={s.navIcon} />,
+        icon: () => <BackIcon/>,
         default: () => <>
           <div class={s.wrapper}>
           {formData.tag_id}|
