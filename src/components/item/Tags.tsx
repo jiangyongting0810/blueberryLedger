@@ -1,5 +1,5 @@
 import { defineComponent, PropType, ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 import { Button } from '../../shared/Button';
 import { http } from '../../shared/Http';
 import { Icon } from '../../shared/Icon';
@@ -15,15 +15,17 @@ export const Tags = defineComponent({
   },
   emits:['update:selected'],
   setup: (props, context) => {
+    const router = useRouter()
     const timer = ref<number>(1)
     const currentTag = ref<HTMLDivElement>()
-    const onLongPress = () => {
-      console.log('长按');
+    const onLongPress = (tagId:Tag['id']) => {
+      router.push(`/tags/${tagId}/edit?kind=${props.kind}&return_to=${router.currentRoute.value.fullPath}`)
     }
-    const onTouchstart = (e:TouchEvent) => {
+    const onTouchstart = (e:TouchEvent,tag:Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement
+      console.log(tag)
       timer.value = setTimeout(() => {
-        onLongPress()
+        onLongPress(tag.id)
       },500)
     }
     const onTouchend = () => {
@@ -65,7 +67,7 @@ export const Tags = defineComponent({
             <div 
               class={[s.tag, props.selected === tag.id ? s.selected : '']} 
               onClick={()=> onSelect(tag)}
-              onTouchstart={onTouchstart}
+              onTouchstart={(e)=>onTouchstart(e,tag)}
               onTouchend={onTouchend}
               >
               <div class={s.sign}>
