@@ -1,4 +1,4 @@
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Button } from '../../shared/Button';
 import { http } from '../../shared/Http';
@@ -15,6 +15,28 @@ export const Tags = defineComponent({
   },
   emits:['update:selected'],
   setup: (props, context) => {
+    const timer = ref<number>(1)
+    const currentTag = ref<HTMLDivElement>()
+    const onLongPress = () => {
+      console.log('长按');
+    }
+    const onTouchstart = (e:TouchEvent) => {
+      currentTag.value = e.currentTarget as HTMLDivElement
+      timer.value = setTimeout(() => {
+        onLongPress()
+      },500)
+    }
+    const onTouchend = () => {
+      clearTimeout(timer.value)
+    }
+    const onTouchMove = (e:TouchEvent) => {
+      const pointedElement = document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY)
+      console.log(pointedElement)      
+      if(currentTag.value !== pointedElement &&
+        currentTag.value?.contains(pointedElement) === false){
+        clearTimeout(timer.value)
+      }
+    }
     const onSelect = (tag:Tag) => {
       console.log(props.selected);
       console.log(tag.id);
@@ -29,17 +51,23 @@ export const Tags = defineComponent({
     })
     return () => (
       <>
-        <div class={s.tags_wrapper}>
+        <div class={s.tags_wrapper} onTouchmove={onTouchMove}>
           <RouterLink to={`/tags/create?kind=${props.kind}`} class={s.tag}>
             <div class={s.sign}>
               <Icon name="add" class={s.createTag} />
             </div>
             <div class={s.name}>
+              {timer.value}
               新增
             </div>
           </RouterLink>
           {tags.value.map(tag =>
-            <div class={[s.tag, props.selected === tag.id ? s.selected : '']} onClick={()=> onSelect(tag)}>
+            <div 
+              class={[s.tag, props.selected === tag.id ? s.selected : '']} 
+              onClick={()=> onSelect(tag)}
+              onTouchstart={onTouchstart}
+              onTouchend={onTouchend}
+              >
               <div class={s.sign}>
                 {tag.sign}
               </div>
