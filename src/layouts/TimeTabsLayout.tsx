@@ -10,11 +10,11 @@ const demo = defineComponent({
   props: {
     startDate:{
       type:String as PropType<string>,
-      required:true
+      required:false
     },
     endDate:{
       type:String as PropType<string>,
-      required:true
+      required:false
     }
   },
 })
@@ -28,10 +28,7 @@ export const TimeTabsLayout = defineComponent({
   setup: (props, context) => {
     const refSelected = ref('本月')
     const time = new Time()
-    const customTime = reactive({
-      start:new Time().format(),
-      end:new Time().format()
-    })
+    const customTime = reactive<{start?:string,end?:string}>({})
     const timeList = [
       {
         start:time.firstDayOfMonth(),
@@ -61,7 +58,6 @@ export const TimeTabsLayout = defineComponent({
       }
       else{
         refSelected.value=value
-        console.log(1+refSelected.value);
       }
     }
     return () => (
@@ -99,11 +95,15 @@ export const TimeTabsLayout = defineComponent({
                     <FormItem 
                       label='开始时间' 
                       v-model={customTime.start}
-                      type={'date'}/>
+                      type={'date'}
+                      placeholder="请选择时间"
+                      />
                     <FormItem 
                       label='结束时间' 
                       v-model={customTime.end}
-                      type={'date'}/>
+                      type={'date'}
+                      placeholder="请选择时间"
+                      />
                     <FormItem>
                       <div class={s.actions}>
                         <button type="button" onClick={()=>{onclose()}}>取消</button>
