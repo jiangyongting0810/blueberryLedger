@@ -33,7 +33,13 @@ export const mockTagIndex: Mock = (config) => {
       ...attrs
     }))
   const createBody = (n=1,attrs?:any) => ({
-    resources:createTag(n),pager:createPaper(page)
+    resources:createTag(n),
+    pager:createPaper(page),
+    summary: {
+      income: 9900,
+      expenses: 9900,
+      balance: 0
+    }
   })
   if (kind === 'expenses' && (page === 1 || !page)) {
     return [200, createBody(25)]
@@ -77,6 +83,13 @@ export const mockItemIndex:Mock = (config) => {
   }
 }
 
+export const mockItemIndexBalance:Mock = config => {
+  return [200,{
+    expenese:9292,
+    income:222,
+    balance:3313,
+  }]
+}
 export const mockTagEdit:Mock = config => {
   const createTag = (attrs?: any) =>
     ({
