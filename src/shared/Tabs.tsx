@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from 'vue';
 import s from './Tabs.module.scss';
-export const  Tabs = defineComponent({
+export const Tabs = defineComponent({
   props: {
     classPrefix:{
       type:String
@@ -9,6 +9,10 @@ export const  Tabs = defineComponent({
       type: String as PropType<string>,
       required:false
     },
+    rerenderOnSelect: {
+      type:Boolean as PropType<boolean>,
+      required:true
+    }
   },
   emits:['update:selected'],
   setup: (props, context) => {
@@ -42,9 +46,17 @@ export const  Tabs = defineComponent({
               </li>)
             }
           </ol>
-          <div>
-            {tabs.map(item => <div v-show={item.props?.name === props.selected}>{item}</div>)}
-          </div>
+          {props.rerenderOnSelect ? 
+            <div key={props.selected}>
+              {tabs.find(item => item.props?.name === props.selected)}
+            </div> :
+            <div>
+              {tabs.map(item =>
+                <div v-show={item.props?.name === props.selected}>{item}</div>
+              )}
+            </div>
+          }
+          
         </div>
       )
     }
