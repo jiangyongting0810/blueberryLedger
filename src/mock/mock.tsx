@@ -52,6 +52,26 @@ export const mockTagIndex: Mock = (config) => {
   } 
 }
 
+export const itemSummary:Mock = (config) => {
+  return [200,{
+    "groups": [
+      {
+        "happen_at": "2018-06-18T00:00:00.000+0800",
+        "amount": 100
+      },
+      {
+        "happen_at": "2018-06-22T00:00:00.000+0800",
+        "amount": 200
+      },
+      {
+        "happen_at": "2018-06-29T00:00:00.000+0800",
+        "amount": 300
+      }
+    ],
+    "summary": 900
+  }]
+}
+
 export const mockItemIndex:Mock = (config) => {
   const {kind,page} = config.params
   const per_page = 25 
