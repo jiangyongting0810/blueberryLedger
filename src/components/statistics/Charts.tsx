@@ -13,6 +13,12 @@ type Data1Item = {
   happen_at:string,amount:number
 }
 type Data1 = Data1Item[]
+type Data2Item = {
+  tag_id:number;
+  tag:Tag;
+  amount:number;
+}
+type Data2 = Data2Item[]
 
 export const Charts = defineComponent({
   props: {
@@ -28,6 +34,7 @@ export const Charts = defineComponent({
   setup: (props, context) => {
     const kind = ref('expenses')
     const data1 = ref<Data1>([])
+    
     const betterData1 = computed<[string,number][]>(()=>{
       if(!props.startDate || !props.endDate){return []}
       const diff = new Date(props.endDate).getTime() - new Date(props.startDate).getTime()
@@ -41,17 +48,34 @@ export const Charts = defineComponent({
         return [new Date(time).toISOString(),amount]
       })
     })
+    const data2 = ref<Data2>([])
+    const betterData2 = computed<{ name:string, value: number }[]>(()=>
+      data2.value.map(item =>({
+        name:item.tag.name,
+        value: item.amount
+      }))
+    )
     onMounted(async()=>{
       const response = await http.get<{groups:Data1,summary:number}>('/items/summary',{
         happen_after:props.startDate,
         happen_before:props.endDate,
         kind:kind.value,
-        _mock:'itemSummary'
+        group_by:'happen_at',
+        _mock:'mockItemSummary'
       })
-      console.log(11);
-      console.log(response);
-      console.log(22);
       data1.value = response.data.groups
+    })
+    onMounted(async()=>{
+      const response = await http.get<{groups:Data2;summary:number}>('/item/summary',{
+        happen_after:props.startDate,
+        happen_before:props.endDate,
+        kind:kind.value,
+        group_by:'tag_id',
+        _mock:'mockItemSummary'
+      })
+      data2.value = response.data.groups
+      console.log(data2);
+      
     })
     return () => (
       <div class={s.wrapper}>
@@ -61,7 +85,7 @@ export const Charts = defineComponent({
           {value:'income',text:'收入'}
         ]} v-model={kind.value}/>
         <LineChart data={betterData1.value}/>
-        <PieChart/>
+        <PieChart data={betterData2.value}/>
         <Bar/>
       </div>
     )
