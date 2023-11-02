@@ -55,6 +55,16 @@ export const Charts = defineComponent({
         value: item.amount
       }))
     )
+
+    // const data3 = ref([])
+    const betterDate3 = computed<{tag:Tag,amount:number,percent:number}[]>(()=>{
+      const total = data2.value.reduce((sum,item)=>sum + item.amount,0)
+      return data2.value.map(item=>({
+        ...item,
+        percent:Math.round(item.amount/total * 100)
+      }))
+    })
+
     onMounted(async()=>{
       const response = await http.get<{groups:Data1,summary:number}>('/items/summary',{
         happen_after:props.startDate,
@@ -86,7 +96,7 @@ export const Charts = defineComponent({
         ]} v-model={kind.value}/>
         <LineChart data={betterData1.value}/>
         <PieChart data={betterData2.value}/>
-        <Bar/>
+        <Bar data={betterDate3.value}/>
       </div>
     )
   }
