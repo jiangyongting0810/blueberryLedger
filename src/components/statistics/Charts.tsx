@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, PropType, ref } from 'vue';
+import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue';
 import { FormItem } from '../../shared/Form';
 import s from './Charts.module.scss';
 import { PieChart } from './PieChart';
@@ -65,7 +65,7 @@ export const Charts = defineComponent({
       }))
     })
 
-    onMounted(async()=>{
+    const fetchData1 = async()=>{
       const response = await http.get<{groups:Data1,summary:number}>('/items/summary',{
         happen_after:props.startDate,
         happen_before:props.endDate,
@@ -74,8 +74,10 @@ export const Charts = defineComponent({
         _mock:'mockItemSummary'
       })
       data1.value = response.data.groups
-    })
-    onMounted(async()=>{
+    }
+    onMounted(fetchData1)
+    watch(()=>kind.value ,fetchData1)
+    const fetchData2 =async()=>{
       const response = await http.get<{groups:Data2;summary:number}>('/item/summary',{
         happen_after:props.startDate,
         happen_before:props.endDate,
@@ -84,9 +86,9 @@ export const Charts = defineComponent({
         _mock:'mockItemSummary'
       })
       data2.value = response.data.groups
-      console.log(data2);
-      
-    })
+    }
+    onMounted(fetchData2)
+    watch(()=>kind.value ,fetchData2)
     return () => (
       <div class={s.wrapper}>
         {/* |{category.value}| */}
