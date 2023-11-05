@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import { Toast } from "vant";
 import { mockItemCreate, mockItemIndex, mockItemIndexBalance, mockItemSummary, mockSession, mockTagEdit, mockTagIndex, mockTagShow } from "../mock/mock";
 
 type GetConfig = Omit<AxiosRequestConfig,'params'|'url'|'method'>
@@ -34,7 +35,7 @@ const mock = (response:AxiosResponse) => {
     &&location.hostname !== '192.168.3.57'
   ){return false}
   //查看请求参数里面是不是有_mock的参数
-  switch (response.config?.params?._mock){
+  switch (response.config?._mock){
     case 'tagIndex':
       [response.status, response.data] = mockTagIndex(response.config)
       return true
@@ -49,6 +50,7 @@ const mock = (response:AxiosResponse) => {
       return true
     case 'tagEdit':
       [response.status, response.data] = mockTagEdit(response.config)
+      return true
     case 'itemIndex':
       [response.status, response.data] = mockItemIndex(response.config)
       return true
@@ -69,7 +71,22 @@ http.instance.interceptors.request.use(config => {
   if(jwt){
     config.headers!.Authorization = `Bearer ${jwt}`
   }
+  console.log(config)  
+  if(config._autoLoading === true){
+    Toast.loading({
+      message: '加载中...',
+      forbidClick: true,
+      duration:0
+    })
+  }
   return config
+})
+
+http.instance.interceptors.response.use((response)=>{
+  Toast.clear()	
+  return response
+},(error)=>{
+  return error
 })
 
 http.instance.interceptors.response.use((response) => {

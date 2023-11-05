@@ -1,4 +1,5 @@
-import { defineComponent } from 'vue';
+import { Toast } from 'vant';
+import { defineComponent, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 import { MainLayout } from '../layouts/MainLayout';
 import { Button } from '../shared/Button';
@@ -12,6 +13,11 @@ export const StartPage = defineComponent({
     const onClick = ()=>{
       console.log("开始记账被点击");
     }
+    // onMounted(()=>Toast.loading({
+    //   message: '加载中...',
+    //   forbidClick: true,
+    //   duration:0
+    // }))
      return () => (
       <div>
         <MainLayout>
