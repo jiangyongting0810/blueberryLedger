@@ -83,10 +83,15 @@ http.instance.interceptors.request.use(config => {
 })
 
 http.instance.interceptors.response.use((response)=>{
-  Toast.clear()	
+  if(response.config._autoLoading === true){
+    Toast.clear();
+  }
   return response
-},(error)=>{
-  return error
+}, (error: AxiosError)=>{
+  if(error.response?.config._autoLoading === true){
+    Toast.clear();
+  }
+  throw error
 })
 
 http.instance.interceptors.response.use((response) => {
