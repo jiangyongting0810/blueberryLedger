@@ -1,0 +1,13 @@
+.text{
+  text-align: center;
+  font-size: 24px;
+}
+
+.blueberries{
+  width: 128px;
+  height: 128px;
+  &_wrapper{
+    padding-top: 120px ;
+    padding-bottom: 30px;
+  }
+}
