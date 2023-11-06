@@ -42,10 +42,10 @@ export const TagForm = defineComponent({
       if(!hasError(errors)){
         const promise = await formData.id ?
           http.patch(`/tags/${formData.id}`, formData, {
-            _mock: 'tagEdit'
+            _mock: 'tagEdit',_autoLoading:true
           }) :
           http.post('/tags', formData, {
-            _mock: 'tagCreate'
+            _mock: 'tagCreate',_autoLoading:true
           })
         await promise.catch((error)=>
           onFormError(error, (data)=> Object.assign(errors, data.errors))
