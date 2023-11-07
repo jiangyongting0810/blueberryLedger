@@ -39,9 +39,9 @@ export const ItemCreate = defineComponent({
         icon: () => <BackIcon/>,
         default: () => <>
           <div class={s.wrapper}>
-          {formData.tag_id}|
+          {/* {formData.tag_id}|
           {formData.happen_at}|
-          {formData.amount}|
+          {formData.amount}| */}
             <Tabs v-model:selected={formData.kind} class={s.tabs}>
               <Tab name="支出">
                 <Tags kind='expenses' v-model:selected={formData.tag_id[0]}/>

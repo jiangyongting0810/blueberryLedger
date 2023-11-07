@@ -23,7 +23,7 @@ export const Tags = defineComponent({
     }
     const onTouchstart = (e:TouchEvent,tag:Tag) => {
       currentTag.value = e.currentTarget as HTMLDivElement
-      console.log(tag)
+      // console.log(tag)
       timer.value = setTimeout(() => {
         onLongPress(tag.id)
       },500)
@@ -40,8 +40,8 @@ export const Tags = defineComponent({
       }
     }
     const onSelect = (tag:Tag) => {
-      console.log(props.selected);
-      console.log(tag.id);
+      // console.log(props.selected);
+      // console.log(tag.id);
       context.emit("update:selected",tag.id)
     }
     const {tags , page ,hasMore ,fetchTags} = useTags((page)=>{
@@ -61,7 +61,6 @@ export const Tags = defineComponent({
               <Icon name="add" class={s.createTag} />
             </div>
             <div class={s.name}>
-              {timer.value}
               新增
             </div>
           </RouterLink>
