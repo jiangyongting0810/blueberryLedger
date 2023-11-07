@@ -6,7 +6,8 @@ import s from './welcome.module.scss'
 export const ForthActions:FunctionalComponent=()=>{
   return <div class={s.actions}>
     <SkipFeatures class={s.fake} />
-    <SkipFeatures name='完成' />
+      <RouterLink to="/items">完成</RouterLink>
+      {/* <SkipFeatures name='完成' /> */}
     <SkipFeatures class={s.fake} />
   </div>
 }

@@ -26,7 +26,7 @@ export const StartPage = defineComponent({
             icon:()=><OverlayIcon/>,
             default:()=><>
               <Center class={s.record_wrapper}>
-              <Icon name='record' class={s.record}/>
+                <Icon name='record' class={s.record}/>
               </Center>
               <div class={s.button_wrapper}>
                 <RouterLink to='/items/create'>

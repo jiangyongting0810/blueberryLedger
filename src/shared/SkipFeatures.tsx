@@ -14,7 +14,7 @@ export const SkipFeatures = defineComponent({
     }
     return () => (
       <div onClick={onClick}>
-        <RouterLink to="/start">{props.name}</RouterLink>
+        <RouterLink to="/items">{props.name}</RouterLink>
       </div>
     )
   }
