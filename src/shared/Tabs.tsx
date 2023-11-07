@@ -11,7 +11,7 @@ export const Tabs = defineComponent({
     },
     rerenderOnSelect: {
       type:Boolean as PropType<boolean>,
-      required:true
+      default: false
     }
   },
   emits:['update:selected'],
