@@ -52,7 +52,7 @@ export const ItemSummary = defineComponent({
     })
     const fetchItemsBalance = async()=>{
       if(!props.endDate || !props.startDate){return}
-      const response =await http.get('/items/blance',{
+      const response =await http.get('/items/balance',{
         happen_after:props.startDate,
         happen_before:props.endDate,
         page:page.value + 1,
