@@ -25,7 +25,7 @@ export const TagForm = defineComponent({
     })
     const errors = reactive<FormErrors<typeof FormData>>({})
     const onSubmit =async (e:Event) =>{
-      // console.log(toRaw(formData))
+      console.log(toRaw(formData))
       e.preventDefault()
       const rules:Rules<typeof formData> = [
         { key: 'name', type: 'required', message: '必填' },

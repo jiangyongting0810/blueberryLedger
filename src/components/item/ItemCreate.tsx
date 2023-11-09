@@ -24,6 +24,15 @@ export const ItemCreate = defineComponent({
     const router = useRouter()
     const onError = (error:AxiosError<ResourceError>) => {
       if(error.response?.status){
+        console.log();
+        
+        // if(error.response.data.errors.tag_ids[0] === '必填'){
+        //   Dialog.alert({
+        //     title:'出错',
+        //     message:'标签必填'
+        //   })
+        //   throw error
+        // }
         Dialog.alert({
           title:'出错',
           message:Object.values(error.response.data.errors).join('\n')
@@ -41,19 +50,22 @@ export const ItemCreate = defineComponent({
       Object.assign(errors,{kind:[],tag_ids:[],amount:[],happen_at:[]})
       const rules:Rules<typeof formData> = [
         { key: 'kind', type: 'required', message: '类型必填' },
-        { key: 'tag_ids', type: 'required', message: '111必填' },
+        { key: 'tag_ids', type: 'required', message: '标签必填' },
         { key: 'amount', type: 'required', message: '金额必填' },
-        { key: 'amount', type: 'notEqual', value: 0, message: '金额不能1为零' },
+        { key: 'amount', type: 'notEqual', value: 0, message: '金额不能为零' },
         { key: 'happen_at', type: 'required', message: '时间必填' },
       ]
-      Object.assign(errors, validate(formData,rules ))
+      console.log(111);
+      console.log(formData.tag_ids);
+      console.log(111);
+      Object.assign(errors, validate(formData,rules))
       console.log(errors)
       if(hasError(errors)){
         Dialog.alert({
           title:'出错',
           message:Object.values(errors).filter(i=>i.length > 0).join('\n')
         })
-        console.log(111);
+        
         return
       }
       await http.post<Resource<Item>>('/items', formData,{_mock: 'itemCreate',_autoLoading:true}

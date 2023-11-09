@@ -1,3 +1,4 @@
+
 interface FData{
   [k:string]:JSONValue
 }
@@ -24,8 +25,9 @@ export const validate =<T extends FData>(formData:T,rules:Rules<T>)=>{
     switch(type){
       case 'required':
         if(isEmpty(value)){
+
           errors[key] = errors[key] ?? []
-          errors[key]?.push('必填')
+          errors[key]?.push(message)
           // errors[key]?.push("1111")
         }
         break;
@@ -47,7 +49,10 @@ export const validate =<T extends FData>(formData:T,rules:Rules<T>)=>{
   })
   return errors
 }
-function isEmpty(value:null|undefined | '' |string|number|FData){
+function isEmpty(value:null|undefined | '' |string|number|FData | any[]){
+  if(Array.isArray(value)){
+    return value.length === 0
+  }
   return value === null || value === undefined || value === ''
 }
 
