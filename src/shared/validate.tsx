@@ -1,12 +1,13 @@
 interface FData{
-  [k:string]:undefined | null | string | number | FData
+  [k:string]:JSONValue
 }
 type Rule<T> = {
   key:keyof T
   message:string
 } & (
     { type:'required'} | 
-    { type:'pattern',regex:RegExp}
+    { type:'pattern',regex:RegExp} |
+    { type:'notEqual',value:JSONValue}
 )
 type Rules<T> = Rule<T>[]
 
@@ -24,12 +25,18 @@ export const validate =<T extends FData>(formData:T,rules:Rules<T>)=>{
       case 'required':
         if(isEmpty(value)){
           errors[key] = errors[key] ?? []
-          errors[key]?.push(message)
+          errors[key]?.push('必填')
           // errors[key]?.push("1111")
         }
         break;
       case 'pattern':
         if(!isEmpty(value) && !rule.regex.test(value!.toString())){
+          errors[key] = errors[key] ?? []
+          errors[key]?.push(message)
+        }
+        break;
+      case 'notEqual':
+        if(!isEmpty(value) && value === rule.value){
           errors[key] = errors[key] ?? []
           errors[key]?.push(message)
         }

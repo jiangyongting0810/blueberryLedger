@@ -21,9 +21,9 @@ export const TagForm = defineComponent({
       id:undefined,
       name:'',
       sign:'',
-      kind:route.query.kind?.toString()
+      kind:route.query.kind!.toString() as ('expenses' | 'income')
     })
-    const errors = reactive<{[k in keyof typeof formData]?:string[]}>({})
+    const errors = reactive<FormErrors<typeof FormData>>({})
     const onSubmit =async (e:Event) =>{
       // console.log(toRaw(formData))
       e.preventDefault()
@@ -32,13 +32,13 @@ export const TagForm = defineComponent({
         { key: 'name', type: 'pattern', regex: /^.{1,4}$/, message: '只能填 1 到 4 个字符' },
         { key: 'sign', type: 'required', message: '必填' },
       ]
-      console.log(toRaw(errors));
+      // console.log(toRaw(errors));
       Object.assign(errors, {
         name: [],
         sign: [],
       })
       Object.assign(errors, validate(formData, rules))
-      // console.log(toRaw(errors));
+      console.log(toRaw(errors));
       if(!hasError(errors)){
         const promise = await formData.id ?
           http.patch(`/tags/${formData.id}`, formData, {
