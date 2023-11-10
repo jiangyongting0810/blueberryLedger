@@ -5,7 +5,7 @@ import { mockItemCreate, mockItemIndex, mockItemIndexBalance, mockItemSummary, m
 type GetConfig = Omit<AxiosRequestConfig,'params'|'url'|'method'>
 type PostConfig = Omit<AxiosRequestConfig, 'url' | 'data' | 'method'>
 type PatchConfig = Omit<AxiosRequestConfig, 'url' | 'data'>
-type deleteConfig = Omit<AxiosRequestConfig, 'params'>
+type DeleteConfig = Omit<AxiosRequestConfig, 'params'>
 
 export class Http{
   instance:AxiosInstance
@@ -24,7 +24,7 @@ export class Http{
     return this.instance.request<R>({ ...config, url, data, method: 'patch' })
   }
   // destroy
-  delete<R = unknown>(url: string, query?: Record<string, string>, config?: deleteConfig) {
+  delete<R = unknown>(url: string, query?: Record<string, string>, config?: DeleteConfig) {
     return this.instance.request<R>({ ...config, url: url, params: query, method: 'delete' })
   }
 }
