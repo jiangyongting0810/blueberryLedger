@@ -1,33 +1,43 @@
+import { useMeStore } from './stores/useMeStore';
+import { routes } from './config/routes';
 import { createApp } from 'vue'
-import { App }  from './App'
-import {createRouter} from 'vue-router'
-import {routes} from './config/routes'
-import { history } from './shared/history'
+import { App } from './App'
+import { createRouter } from 'vue-router'
+import { history } from './shared/history';
 import '@svgstore';
-import { fetchMe, mePromise } from './shared/mePromise'
+import { createPinia } from 'pinia';
 
-const router = createRouter({
-  history,
-  routes, 
-})
 
-fetchMe()
-
-router.beforeEach(async (to,from) => {
-  if(to.path === '/' || to.path.startsWith('/welcome') || to.path.startsWith('/sign_in') || to.path === '/items'){
-    return true
-  }else {
-    const path = await mePromise!.then(
-      () => true,
-      () => '/sign_in?return_to=' + to.path
-    )
-    return path
-  }
-})
-
+const router = createRouter({ history, routes })
+const pinia = createPinia()
 const app = createApp(App)
-//确保 _use_ 路由实例使
-//整个应用支持路由。
 app.use(router)
-
+app.use(pinia)
 app.mount('#app')
+
+const meStore = useMeStore()
+meStore.fetchMe()
+
+
+
+const whiteList: Record<string, 'exact' | 'startsWith'> = {
+  '/': 'exact',
+  '/items': 'exact',
+  '/welcome': 'startsWith',
+  '/sign_in': 'startsWith',
+}
+router.beforeEach((to, from) => {
+  for (const key in whiteList) {
+    const value = whiteList[key]
+    if (value === 'exact' && to.path === key) {
+      return true
+    }
+    if (value === 'startsWith' && to.path.startsWith(key)) {
+      return true
+    }
+  }
+  return meStore.mePromise!.then(
+    () => true,
+    () => '/sign_in?return_to=' + to.path
+  )
+})

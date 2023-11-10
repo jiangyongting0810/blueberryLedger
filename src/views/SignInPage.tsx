@@ -9,6 +9,7 @@ import { http } from '../shared/Http';
 import { Icon } from '../shared/Icon';
 import { refreshMe } from '../shared/mePromise';
 import { hasError, validate } from '../shared/validate';
+import { useMeStore } from '../stores/useMeStore';
 import s from './SignInPage.module.scss';
 export const SignInPage = defineComponent({
   props: {
@@ -17,6 +18,7 @@ export const SignInPage = defineComponent({
     }
   },
   setup: (props, context) => {
+    const meStore = useMeStore()
     const { ref:refDisabled,toggle,on:disabled,off:enable } = useBool(false)
     const formData = reactive({
       email:'792304256@qq.com',
@@ -30,7 +32,7 @@ export const SignInPage = defineComponent({
     const route = useRoute()
     const refValidationCode = ref<any>()
     const onSubmit = async (e:Event)=>{
-      console.log('submit');
+      // console.log('submit');
       e.preventDefault()
       Object.assign(errors, {
         email: [], code: []
@@ -42,12 +44,12 @@ export const SignInPage = defineComponent({
       ]))
       if(!hasError(errors)){
         const response = await http.post<{jwt:string}>('/session',formData).catch(onError)
-        console.log(response);
+        // console.log(response);
         localStorage.setItem('jwt',response.data.jwt)       
         // router.push("/")
         const returnTo = route.query.return_to?.toString()
-        console.log(route.query.return_to);
-        refreshMe()
+        // console.log(route.query.return_to);
+        meStore.refreshMe()
         router.push(returnTo || '/')
       }
     }
