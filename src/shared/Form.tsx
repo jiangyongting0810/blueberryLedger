@@ -79,7 +79,7 @@ export const FormItem = defineComponent({
             value={props.modelValue} 
             onChange={(e:any)=>{
               context.emit('update:modelValue',e.target.value)
-              console.log(e.target.value);
+              // console.log(e.target.value);
             }}>
             {props.options?.map(option =>
               <option value={option.value}>

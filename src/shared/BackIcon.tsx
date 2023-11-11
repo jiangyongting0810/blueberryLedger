@@ -7,7 +7,7 @@ export const BackIcon = defineComponent({
     const route = useRoute()
     const router = useRouter()
     const onClick = () => {
-      console.log("onClick");
+      // console.log("onClick");
       const { return_to } = route.query
       if(return_to){
         router.push(return_to.toString())

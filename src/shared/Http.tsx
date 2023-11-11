@@ -71,7 +71,7 @@ http.instance.interceptors.request.use(config => {
   if(jwt){
     config.headers!.Authorization = `Bearer ${jwt}`
   }
-  console.log(config)  
+  // console.log(config)  
   if(config._autoLoading === true){
     Toast.loading({
       message: '加载中...',

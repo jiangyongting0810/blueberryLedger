@@ -24,7 +24,7 @@ export const ItemCreate = defineComponent({
     const router = useRouter()
     const onError = (error:AxiosError<ResourceError>) => {
       if(error.response?.status){
-        console.log();
+        // console.log();
         
         // if(error.response.data.errors.tag_ids[0] === '必填'){
         //   Dialog.alert({
@@ -55,11 +55,7 @@ export const ItemCreate = defineComponent({
         { key: 'amount', type: 'notEqual', value: 0, message: '金额不能为零' },
         { key: 'happen_at', type: 'required', message: '时间必填' },
       ]
-      console.log(111);
-      console.log(formData.tag_ids);
-      console.log(111);
       Object.assign(errors, validate(formData,rules))
-      console.log(errors)
       if(hasError(errors)){
         Dialog.alert({
           title:'出错',

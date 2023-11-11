@@ -19,9 +19,9 @@ export const Overlay = defineComponent({
     const me = ref<User>()
     onMounted(async ()=>{
       const response = await mePromise
-      console.log(1)
-      console.log(response)
-      console.log(2)
+      // console.log(1)
+      // console.log(response)
+      // console.log(2)
       me.value = response?.data.resource
     })
     const onSignOut =async () => {
@@ -82,7 +82,7 @@ export const OverlayIcon = defineComponent({
     const refOverlayVisible =ref(false)
     const onClickMenu =() =>{
       refOverlayVisible.value = !refOverlayVisible.value
-      console.log(refOverlayVisible.value);
+      // console.log(refOverlayVisible.value);
     }
     return () => <>
       <Icon name='menu' class={s.navIcon} onClick={onClickMenu}/>

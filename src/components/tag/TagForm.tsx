@@ -25,7 +25,7 @@ export const TagForm = defineComponent({
     })
     const errors = reactive<FormErrors<typeof FormData>>({})
     const onSubmit =async (e:Event) =>{
-      console.log(toRaw(formData))
+      // console.log(toRaw(formData))
       e.preventDefault()
       const rules:Rules<typeof formData> = [
         { key: 'name', type: 'required', message: '必填' },
@@ -38,7 +38,7 @@ export const TagForm = defineComponent({
         sign: [],
       })
       Object.assign(errors, validate(formData, rules))
-      console.log(toRaw(errors));
+      // console.log(toRaw(errors));
       if(!hasError(errors)){
         const promise = await formData.id ?
           http.patch(`/tags/${formData.id}`, formData, {
@@ -55,9 +55,9 @@ export const TagForm = defineComponent({
     }
     onMounted(async()=>{
       if(!props.id){
-        console.log("!props.id")
+        // console.log("!props.id")
       }
-      console.log("props.id")
+      // console.log("props.id")
       const response =await http.get<Resource<Tag>>(`/tags/${props.id}`,{},{
         _mock:'tagShow'
       })

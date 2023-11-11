@@ -52,7 +52,7 @@ export const EmojiSelect = defineComponent({
     }
     const emojis = computed(()=>{
       const selectedItem = table[refSelected.value][1]
-      console.log(selectedItem);
+      // console.log(selectedItem);
       return selectedItem.map(category =>
         emojiList.find(item => item[0] === category)?.[1]
         .map(item => <li class={item === props.modelValue? s.selectedEmoji:''}

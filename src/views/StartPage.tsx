@@ -11,7 +11,7 @@ import s from './StartPage.module.scss'
 export const StartPage = defineComponent({
   setup: (props, context) => {
     const onClick = ()=>{
-      console.log("开始记账被点击");
+      // console.log("开始记账被点击");
     }
     // onMounted(()=>Toast.loading({
     //   message: '加载中...',

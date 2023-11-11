@@ -25,7 +25,7 @@ export const welcome = defineComponent({
       router.push(pushMap[name])
     },500)
     watchEffect(()=>{
-      console.log(swiping.value,direction.value);
+      // console.log(swiping.value,direction.value);
       if(direction.value === "left"){
         push()
       }

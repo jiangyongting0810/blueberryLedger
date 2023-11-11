@@ -19,7 +19,7 @@ export const Tabs = defineComponent({
     return ()=>{
         //如果是多个元素应该是个数组
       const tabs = context.slots.default?.()
-      console.log(tabs);
+      // console.log(tabs);
       if(!tabs) return ()=> null
       for(let i = 0;i<tabs.length;i++){
         if(tabs[i].type !== Tab){
@@ -38,7 +38,7 @@ export const Tabs = defineComponent({
                   // onClick={()=>props.onUpdateSelected?.(item.props?.name)}
                   onClick={()=>{
                     context.emit('update:selected',item.props?.value)
-                    console.log('Tabs的事件被触发')
+                    // console.log('Tabs的事件被触发')
                   }
                 }
               >
