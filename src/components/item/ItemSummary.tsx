@@ -1,5 +1,6 @@
 import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useAfterMe } from '../../hook/useAfterMe';
 import { Button } from '../../shared/Button';
 import { Center } from '../../shared/Center';
 import { Datetime } from '../../shared/Datetime';
@@ -7,6 +8,7 @@ import { FloatButton } from '../../shared/FloatButton';
 import { http } from '../../shared/Http';
 import { Icon } from '../../shared/Icon';
 import { Money } from '../../shared/Money';
+import { useMeStore } from '../../stores/useMeStore';
 import s from './ItemSummary.module.scss';
 export const ItemSummary = defineComponent({
   props: {
@@ -20,6 +22,7 @@ export const ItemSummary = defineComponent({
     }
   },
   setup: (props, context) => {
+    const meStore = useMeStore()
     const items = ref<Item[]>([])
     const hasMore = ref(false)
     const page = ref(0)
@@ -38,7 +41,7 @@ export const ItemSummary = defineComponent({
       hasMore.value = (pager.page - 1) * pager.per_page + resources.length < pager.count
       page.value += 1
     }
-    onMounted(fetchItems)
+    useAfterMe(fetchItems)
     watch(()=>[props.startDate,props.endDate], ()=>{
       items.value = []
       hasMore.value = false
@@ -61,7 +64,7 @@ export const ItemSummary = defineComponent({
       })
       Object.assign(itemsBalance,response.data)
     }
-    onMounted(fetchItemsBalance)
+    useAfterMe(fetchItemsBalance)
     watch(()=>[props.startDate,props.endDate], ()=>{
       Object.assign(itemsBalance, {
         expenses: 0, income: 0, balance: 0
