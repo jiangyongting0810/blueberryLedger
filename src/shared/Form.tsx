@@ -95,12 +95,15 @@ export const FormItem = defineComponent({
               placeholder={props.placeholder}
               />
             <Popup position='bottom' v-model:show={refDateVisible.value}>
-              <DatetimePicker modelvalue={props.modelValue ? new Date(props.modelValue) : new Date()} type="date" title="选择年月日"
+              <DatetimePicker 
+                modelValue={props.modelValue ? new Date(props.modelValue) : new Date()} 
+                type="date" title="选择年月日"
                 onConfirm={(date: Date) => {
                   context.emit('update:modelValue', new Time(date).format())
                   refDateVisible.value = false
                 }}
                 onCancel={() => refDateVisible.value = false} />
+                
             </Popup></>
           case 'validationCode':
             return <>
