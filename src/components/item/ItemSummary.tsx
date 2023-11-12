@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, reactive, ref, watch } from 'vue';
+import { defineComponent, h, onMounted, PropType, reactive, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useAfterMe } from '../../hook/useAfterMe';
 import { Button } from '../../shared/Button';
@@ -24,10 +24,11 @@ export const ItemSummary = defineComponent({
   },
   setup: (props, context) => {
     if(!props.endDate || !props.startDate){
-      return <div>1</div>
+      return ()=> (<div>1</div>)
     }
     const itemStore = useItemStore(['items',props.startDate,props.endDate])
     useAfterMe(()=> itemStore.fetchItems(props.startDate,props.endDate))
+
     watch(
       ()=>[props.startDate,props.endDate], 
       ()=>{
@@ -40,7 +41,7 @@ export const ItemSummary = defineComponent({
       balance:0,
     })
     const fetchItemsBalance = async()=>{
-      if(!props.endDate || !props.startDate){
+      if(!props.startDate ||!props.endDate){
         return
       }
       const response =await http.get('/items/balance',{
