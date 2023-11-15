@@ -78,8 +78,9 @@ export const Charts = defineComponent({
     }
     onMounted(fetchData1)
     watch(()=>kind.value ,fetchData1)
+    
     const fetchData2 =async()=>{
-      const response = await http.get<{groups:Data2;summary:number}>('/item/summary',{
+      const response = await http.get<{groups:Data2;summary:number}>('/items/summary',{
         happen_after:props.startDate,
         happen_before:props.endDate,
         kind:kind.value,
