@@ -32,3 +32,5 @@ export const ComingSoon = defineComponent({
     )
   }
 })
+
+export default ComingSoon
