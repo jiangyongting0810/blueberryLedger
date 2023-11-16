@@ -55,3 +55,5 @@ type User = {
   email:string
 }
 type FormErrors<T> = {[k in keyof typeof T] : string[]}
+
+declare var DEBUG: boolean
