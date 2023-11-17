@@ -21,7 +21,7 @@ export const SignInPage = defineComponent({
     const meStore = useMeStore()
     const { ref:refDisabled,toggle,on:disabled,off:enable } = useBool(false)
     const formData = reactive({
-      email:'792304256@qq.com',
+      email:'',
       code:''
     })
     const errors = reactive({
@@ -79,8 +79,8 @@ export const SignInPage = defineComponent({
               <div class={s.logo}>
                 <Icon name='blueberries' />
                 <h1 class={s.appName}>蓝莓记账</h1>
-                |{formData.email} |
-                |{formData.code}|
+                {/* |{formData.email} | */}
+                {/* |{formData.code}| */}
               </div>
               <Form onSubmit={onSubmit}>
                 <FormItem 
